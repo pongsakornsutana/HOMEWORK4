@@ -1,33 +1,86 @@
 ﻿using System;
 
-namespace homework_4.1
+namespace home3
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            int layer;
-            Console.Write("Please in put your Triangle's leyer :");
-            layer = int.Parse(Console.ReadLine());
-            int layer2 = layer + 1;
-            Pascaltriangle(ref layer2);
+            Console.Write("Please Input your half DNA sequence :");
+            string halfDNASequence = Console.ReadLine();
+            IsValidSequence(halfDNASequence);
         }
-        static void Pascaltriangle(ref int layer2)
+        static bool IsValidSequence(string halfDNASequence)
         {
-            int row = 1, blank, j;
-            for (int i = 0; i < layer2; i = i + 1)
+            foreach (char nucleotide in halfDNASequence)
             {
-                for (blank = 10; blank <= layer2 - i; blank++)
-                    Console.Write(" ");
-                for (j = 0; j <= i; j = j + 1)
+                if (!"ATCG".Contains(nucleotide))
                 {
-                    if (j == 0 || i == 0)
-                        row = 1;
-                    else
-                        row = row * (i - j + 1) / j;
-                    Console.Write(row + " ");
+                    return false;
+                    IncorrectDNA(halfDNASequence);
                 }
-                Console.WriteLine();
+            }
+            return true;
+            correctDNA(halfDNASequence);
+        }
+        static void correctDNA(string halfDNASequence)
+        {
+            Console.WriteLine("Current half DNA sequence is :{0}", halfDNASequence);
+            Console.WriteLine("Do you want to Replicate it? (Y/N):");
+            char answer = char.Parse(Console.ReadLine());
+            switch (answer)
+            {
+                case 'Y':
+                    {
+                        ReplicateSeqeunce(halfDNASequence);
+                    }
+                    break;
+                case 'N':
+                    {
+                        return;
+                    }
+                    break;
+                default:
+                    {
+                        Console.Write("Please Input Y/N");
+                        return;
+                    }
+                    break;
+            }
+
+        }
+        static string ReplicateSeqeunce(string halfDNASequence)
+        {
+            string result = "";
+            foreach (char nucleotide in halfDNASequence)
+            {
+                result += "TAGC"["ATCG".IndexOf(nucleotide)];
+            }
+            return result;
+            Console.Write("Replicate half DNA sequence :{0}", result);
+        }
+        static void IncorrectDNA(string halfDNASequence)
+        {
+            Console.Write("Do you want to prcess another sequnece? (Y/N) :");
+            char answer = char.Parse(Console.ReadLine());
+            switch (answer)
+            {
+                case 'Y':
+                    {
+                        return;
+                    }
+                    break;
+                case 'N':
+                    {
+                        return;
+                    }
+                    break;
+                default:
+                    {
+                        Console.WriteLine("Please Input Y/N");
+                        return;
+                    }
+                    break;
             }
 
         }
